@@ -3,12 +3,12 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: "Vuexy",
+    appName: "Mohamed Attar",
     appLogoImage: require("@src/assets/images/logo/logo.svg").default
   },
   layout: {
-    isRTL: false,
-    skin: "light", // light, dark, bordered, semi-dark
+    isRTL: true,
+    skin: "dark", // light, dark, bordered, semi-dark
     type: "vertical", // vertical, horizontal
     contentWidth: "full", // full, boxed
     menu: {
@@ -21,7 +21,7 @@ const themeConfig = {
       backgroundColor: "white" // BS color options [primary, success, etc]
     },
     footer: {
-      type: "static" // static, sticky, hidden
+      type: "hidden" // static, sticky, hidden
     },
     customizer: false,
     scrollTop: true, // Enable scroll to top button

@@ -12,8 +12,10 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
+    "formik": "^2.4.5",
     "postcss-rtl": "^2.0.0",
     "prismjs": "^1.29.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
@@ -25,7 +27,8 @@
     "react-select": "^5.8.0",
     "reactstrap": "^9.2.2",
     "sass": "^1.74.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "dev": "craco dev",

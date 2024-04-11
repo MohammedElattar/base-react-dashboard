@@ -162,7 +162,7 @@ const Register = () => {
                   I agree to
                   <a
                     className="ms-25"
-                    href="/"
+                    href="/public"
                     onClick={(e) => e.preventDefault()}
                   >
                     privacy policy & terms

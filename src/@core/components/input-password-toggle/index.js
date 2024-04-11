@@ -8,6 +8,8 @@ import { Eye, EyeOff } from "react-feather"
 
 // ** Reactstrap Imports
 import { InputGroup, Input, InputGroupText, Label } from "reactstrap"
+import CustomInput from "../../../components/CustomInput";
+import ErrorBox from "../../../components/ErrorBox";
 
 const InputPasswordToggle = forwardRef((props, ref) => {
   // ** Props
@@ -52,7 +54,7 @@ const InputPasswordToggle = forwardRef((props, ref) => {
           "is-invalid": invalid
         })}
       >
-        <Input
+        <CustomInput
           ref={ref}
           invalid={invalid}
           type={inputVisibility === false ? "password" : "text"}
@@ -76,6 +78,7 @@ const InputPasswordToggle = forwardRef((props, ref) => {
           {renderIcon()}
         </InputGroupText>
       </InputGroup>
+
     </Fragment>
   )
 })

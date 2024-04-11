@@ -1,11 +1,11 @@
 // ** Router imports
-import { useRoutes } from "react-router-dom"
+import {useRoutes} from "react-router-dom"
 
 // ** GetRoutes
-import { getRoutes } from "./routes"
+import {getRoutes} from "./routes"
 
 // ** Hooks Imports
-import { useLayout } from "@hooks/useLayout"
+import {useLayout} from "@hooks/useLayout"
 
 const Router = () => {
   // ** Hooks
@@ -13,9 +13,7 @@ const Router = () => {
 
   const allRoutes = getRoutes(layout)
 
-  const routes = useRoutes([...allRoutes])
-
-  return routes
+  return useRoutes([...allRoutes])
 }
 
 export default Router
