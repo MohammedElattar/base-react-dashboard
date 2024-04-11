@@ -36,8 +36,6 @@ export const passwordRules = (newRules) => {
 const generateSchema = (allRulesObject) => {
     let schema = Yup.object().shape({})
 
-    // Iterate over the rulesObject
-
     Object.entries(allRulesObject).forEach(([fieldName, fieldRules]) => {
         if (fieldRules) {
             let fieldSchema = Yup.string()

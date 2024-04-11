@@ -2,7 +2,7 @@ import generateSchema, {emailRules, passwordRules} from "../../../helpers/valida
 
 const LoginSchema = () => {
     return generateSchema({
-        email: emailRules({required: null}),
+        email: emailRules(),
         password: passwordRules()
     })
 }
