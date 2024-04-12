@@ -3,8 +3,8 @@ import {useState} from "react";
 export const submitListener = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    return {
+    return [
         isSubmitting,
         setIsSubmitting
-    }
+    ]
 }

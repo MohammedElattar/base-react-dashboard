@@ -1,30 +1,19 @@
-import PropTypes from "prop-types";
-import {submitListener} from "../../../utility/requestHelper";
-
-export const handleLogin = (payload) => {
-    const {isSubmitting, setIsSubmitting} = submitListener()
-
-    setIsSubmitting(false)
-
-    console.log(payload)
-
-    setTimeout(() => setIsSubmitting(true), 2000)
-
-    return {isSubmitting}
-}
+import {useAuthLogic} from "../hooks/useAuthLogic";
 
 const LoginService = () => {
-    const {isSubmitting, setIsSubmitting} = submitListener()
+    const {dispatchLogin, loginSelector} = useAuthLogic()
+    const {userInfo, isLoading, code} = loginSelector;
 
-    const handleLogin = (payload) => {
-        setIsSubmitting(true)
-
-        console.log(payload)
-
-        setTimeout(() => setIsSubmitting(false), 2000)
+    const handleLogin = async (payload) => {
+        await dispatchLogin(payload)
     }
 
-    return {handleLogin, isSubmitting}
+    return {
+        handleLogin,
+        userInfo,
+        isLoading,
+        code
+    }
 }
 
 export default LoginService

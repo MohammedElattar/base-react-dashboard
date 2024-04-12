@@ -1,5 +1,5 @@
 import {lazy} from "react"
-import authRoutesNames from "./routesNames"
+import authRoutesNames from "../constants/routesNames"
 
 const LoginController = lazy(() => import("../containers/LoginContainer"))
 
