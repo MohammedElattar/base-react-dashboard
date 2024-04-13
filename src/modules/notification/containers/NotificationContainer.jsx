@@ -1,24 +1,34 @@
-import NotificationView from "../views/NotificationView";
 import useNotificationLogic from "../hooks/useNotificationLogic";
-import {useEffect} from "react";
+import {lazy, useEffect} from "react";
 import {formatUnreadNotificationsCount} from "../helpers/notificationHelper";
-import {useStore} from "react-redux";
 
+const NotificationView = lazy(() => import('../views/NotificationView'))
 const NotificationContainer = () => {
     const {
-        // getAllNotifications,
+        getAllNotifications,
+        unreadNotificationsCount,
+        deleteOneNotification,
+        deleteAllNotifications,
+        readOneNotification,
+        readAllNotifications,
+        allNotification,
         unreadNotifications,
-        unreadNotificationsCount
-        // unreadNotificationsLoading
+        readAllLoading
     } = useNotificationLogic()
 
     useEffect(() => {
         unreadNotificationsCount()
+        getAllNotifications()
     }, []);
 
-    console.log(useStore().getState())
     return <NotificationView
+        notifications={allNotification}
+        handleDeletingOneNotification={deleteOneNotification}
+        handleDeletingAllNotification={deleteAllNotifications}
+        handleReadingOneNotification={readOneNotification}
+        handleReadingAllNotification={readAllNotifications}
         unreadNotificationsCount={formatUnreadNotificationsCount(unreadNotifications)}
+        readAllNotificationLoading={readAllLoading}
     />
 }
 

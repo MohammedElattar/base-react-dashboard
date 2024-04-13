@@ -40,20 +40,16 @@ axiosInstance.interceptors.response.use(function (response) {
 
     toast.dismiss()
 
-    switch (errorCode) {
-        case HttpResponse.INTERNAL_SERVER_ERROR:
-            toast.error(message);
-            break;
-        case HttpResponse.UN_AUTHENTICATED:
-            toast.error(message)
-            resetLogin()
+    if (errorCode === HttpResponse.UN_AUTHENTICATED) {
+        toast.error(message)
+        resetLogin()
 
-            if (window.location.pathname !== LOGIN_ROUTE) {
-                window.location.replace(LOGIN_ROUTE)
-            }
-
-            break;
+        if (window.location.pathname !== LOGIN_ROUTE) {
+            window.location.replace(LOGIN_ROUTE)
+        }
     }
+
+    toast.error(message)
 
     return Promise.reject(error);
 })

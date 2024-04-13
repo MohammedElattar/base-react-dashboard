@@ -18,7 +18,7 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {
         setAllNotificationsAction: (state, action) => {
-            state.data = action.payload
+            state.all = action.payload
         },
         setAllNotificationsLoading: (state, action) => {
             state.showAllLoading = action.payload;
@@ -29,6 +29,12 @@ export const notificationSlice = createSlice({
         setUnreadNotificationCountLoading: (state, action) => {
             state.unreadCountLoading = action.payload;
         },
+        setReadOneNotificationLoadingAction: (state, action) => {
+            state.readOneLoading = action.payload
+        },
+        setReadAllNotificationLoading: (state, action) => {
+            state.readAllLoading = action.payload;
+        },
         ...resetStoreMethod(initialState)
     }
 })
@@ -38,5 +44,7 @@ export const {
     setAllNotificationsAction,
     setAllNotificationsLoading,
     setUnreadNotificationsCountAction,
-    setUnreadNotificationCountLoading
+    setUnreadNotificationCountLoading,
+    setReadOneNotificationLoadingAction,
+    setReadAllNotificationLoading
 } = notificationSlice.actions
