@@ -1,10 +1,7 @@
-import {useState} from "react";
+export const handleRoute = (path, bindings) => {
+    Object.keys(bindings).forEach((key) => {
+        path = path.replace(`{${key}}`, bindings[key])
+    })
 
-export const submitListener = () => {
-    const [isSubmitting, setIsSubmitting] = useState(false)
-
-    return [
-        isSubmitting,
-        setIsSubmitting
-    ]
+    return path;
 }

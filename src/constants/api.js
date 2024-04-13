@@ -5,5 +5,6 @@ export const HttpResponse = {
     BAD_REQUEST: 400,
     VALIDATION_ERRORS: 422,
     NOT_FOUND: 404,
-    FORBIDDEN: 403
+    FORBIDDEN: 403,
+    UN_AUTHENTICATED: 401
 }

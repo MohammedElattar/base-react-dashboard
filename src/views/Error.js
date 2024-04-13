@@ -9,13 +9,14 @@ import { useSkin } from "@hooks/useSkin"
 
 // ** Styles
 import "@styles/base/pages/page-misc.scss"
+import {TemplateTitle} from "../router/routes";
 
 const Error = () => {
   // ** Hooks
   const { skin } = useSkin()
 
   const illustration = skin === "dark" ? "error-dark.svg" : "error.svg",
-    source = require(`@src/assets/images/pages/${illustration}`).default
+    source = require(`@src/assets/images/pages/${illustration}`)
   return (
     <div className="misc-wrapper">
       <a className="brand-logo" href="/">
@@ -85,7 +86,7 @@ const Error = () => {
             </g>
           </g>
         </svg>
-        <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+        <h2 className="brand-text text-primary ms-1">{TemplateTitle}</h2>
       </a>
       <div className="misc-inner p-2 p-sm-3">
         <div className="w-100 text-center">

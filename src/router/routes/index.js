@@ -13,6 +13,7 @@ import PublicRoute from "@components/routes/PublicRoute"
 // ** Utils
 import {isObjEmpty} from "@utils"
 import {authRoutes} from "../../modules/auth/routes"
+import {HOME_ROUTE, NOT_FOUND_ROUTE} from "../../constants/routes";
 
 const getLayout = {
     blank: <BlankLayout/>,
@@ -33,12 +34,12 @@ const Error = lazy(() => import("../../views/Error"))
 // ** Merge Routes
 const Routes = [
     {
-        path: "/",
+        path: '/',
         index: true,
         element: <Navigate replace to={DefaultRoute}/>
     },
     {
-        path: "/home",
+        path: HOME_ROUTE,
         element: <Home/>
     },
     {
@@ -46,7 +47,7 @@ const Routes = [
         element: <SecondPage/>
     },
     {
-        path: "/error",
+        path: NOT_FOUND_ROUTE,
         element: <Error/>,
         meta: {
             layout: "blank"

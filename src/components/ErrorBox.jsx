@@ -4,8 +4,8 @@ const ErrorBox = ({message}) => {
     return message ? <span className="alert alert-danger mt-1">{message}</span> : null
 }
 
-ErrorBox.PropTypes = {
-    message: PropTypes.string.isRequired
+ErrorBox.propTypes = {
+    message: PropTypes.string
 }
 
 export default ErrorBox

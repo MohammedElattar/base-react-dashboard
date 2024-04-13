@@ -5,12 +5,20 @@ import LoginService from "../services/loginService";
 import {HttpResponse} from "../../../constants/api";
 import {useNavigate} from "react-router-dom";
 import {DEFAULT_ROUTE} from "../../../constants/routes";
+import {isUserLoggedIn} from "../utils/authHelper";
 
 const LoginView = lazy(() => import("../views/LoginView"))
 
 const LoginContainer = () => {
-    const {handleLogin, isLoading, code} = LoginService();
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isUserLoggedIn()) {
+            navigate(DEFAULT_ROUTE);
+        }
+    }, [navigate]);
+
+    const {handleLogin, isLoading, code} = LoginService();
     const formik = formikInstance({
         initialValues: {email: '', password: ''},
         validationSchema: loginSchema(),
