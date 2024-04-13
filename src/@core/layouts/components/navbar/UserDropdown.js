@@ -2,12 +2,6 @@ import { Link } from "react-router-dom"
 import Avatar from "@components/avatar"
 import {
   User,
-  Mail,
-  CheckSquare,
-  MessageSquare,
-  Settings,
-  CreditCard,
-  HelpCircle,
   Power
 } from "react-feather"
 import {

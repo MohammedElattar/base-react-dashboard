@@ -7,7 +7,7 @@ const themeConfig = {
     appLogoImage: require("@src/assets/images/logo/logo.svg").default
   },
   layout: {
-    isRTL: true,
+    isRTL: false,
     skin: "dark", // light, dark, bordered, semi-dark
     type: "vertical", // vertical, horizontal
     contentWidth: "full", // full, boxed

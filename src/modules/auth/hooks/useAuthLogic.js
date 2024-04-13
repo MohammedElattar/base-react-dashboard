@@ -54,9 +54,8 @@ export const useAuthLogic = () => {
             .post('/auth/logout')
             .then((res) => {
                 if (res.data.code === HttpResponse.OK) {
-                    dispatch(resetLoginReducer())
                     resetLogin()
-
+                    dispatch(resetLoginReducer())
                     navigate(LOGIN_ROUTE)
                 }
             })

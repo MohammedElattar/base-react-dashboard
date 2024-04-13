@@ -1,5 +1,6 @@
 // ** Redux Imports
 import {createSlice} from "@reduxjs/toolkit"
+import { resetStoreMethod } from "../../../utility/reduxHelper";
 
 const initialState = {
     userInfo: {},
@@ -29,11 +30,8 @@ export const loginSlice = createSlice({
         resetTokenReducer: (state) => {
             state.token = initialState.token
         },
-        resetLoginReducer: (state) => {
-            state.code = initialState.code
-            state.token = initialState.token
-            state.userInfo = initialState.userInfo
-        }
+        resetLoginReducer: () => initialState,
+        ...resetStoreMethod(initialState)
     }
 })
 
