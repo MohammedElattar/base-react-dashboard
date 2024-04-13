@@ -45,7 +45,6 @@ axiosInstance.interceptors.response.use(function (response) {
             toast.error(message);
             break;
         case HttpResponse.UN_AUTHENTICATED:
-            console.log(getToken())
             toast.error(message)
             resetLogin()
 

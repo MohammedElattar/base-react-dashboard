@@ -1,10 +1,5 @@
-// ** React Imports
 import { Link } from "react-router-dom"
-
-// ** Custom Components
 import Avatar from "@components/avatar"
-
-// ** Third Party Components
 import {
   User,
   Mail,
@@ -15,24 +10,25 @@ import {
   HelpCircle,
   Power
 } from "react-feather"
-
-// ** Reactstrap Imports
 import {
   UncontrolledDropdown,
   DropdownMenu,
   DropdownToggle,
   DropdownItem
 } from "reactstrap"
-
-// ** Default Avatar Image
 import {getUserData} from "../../../../modules/auth/utils/authHelper";
-import {logoutUser} from "../../../../modules/auth/services/logoutService";
 import profileService from "../../../../modules/auth/services/profileService";
+import {useEffect} from "react";
+import {useAuthLogic} from "../../../../modules/auth/hooks/useAuthLogic";
 
 const UserDropdown = () => {
   const profileData = getUserData();
   const {fetchProfileInfo} = profileService()
-  fetchProfileInfo()
+  const {dispatchLogout} = useAuthLogic()
+
+  useEffect(() => {
+    fetchProfileInfo()
+  }, [])
 
   return (
       <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
@@ -59,7 +55,7 @@ const UserDropdown = () => {
             <span className="align-middle">Profile</span>
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem onClick={logoutUser}>
+          <DropdownItem onClick={dispatchLogout}>
             <Power size={14} className="me-75" />
             <span className="align-middle">Logout</span>
           </DropdownItem>

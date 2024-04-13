@@ -27,6 +27,7 @@ const LoginContainer = () => {
 
     useEffect(() => {
         if (code === HttpResponse.OK) {
+            console.log('hi here')
             navigate(DEFAULT_ROUTE, {replace: true})
         }
     }, [code]);

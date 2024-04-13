@@ -1,12 +1,20 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setUserInfoLoading, setUserInfo, setUserInfoCode} from "../redux/loginReducer";
 import axiosInstance from "../../../api/axiosInstance";
 import {HttpResponse} from "../../../constants/api";
-import {setToken, setUserData} from "../utils/authHelper";
+import {resetLogin, setToken, setUserData} from "../utils/authHelper";
+import {LOGIN_ROUTE} from "../constants/routes";
+import {useNavigate} from "react-router-dom";
+import {
+    resetLoginReducer,
+    setUserInfoCodeReducer,
+    setUserInfoLoadingReducer,
+    setUserInfoReducer
+} from "../redux/loginReducer";
 
 export const useAuthLogic = () => {
     const dispatch = useDispatch()
     const loginSelector = useSelector(state => state.loginReducer)
+    const navigate = useNavigate()
 
     const userInfoHandler = (result, shouldSetToken = true) => {
         if (result.data.code === HttpResponse.OK) {
@@ -18,20 +26,20 @@ export const useAuthLogic = () => {
             }
 
             //TODO redux stuff
-            dispatch(setUserInfo(result.data.data))
+            dispatch(setUserInfoReducer(result.data.data))
         }
 
-        dispatch(setUserInfoCode(result.data.code))
+        dispatch(setUserInfoCodeReducer(result.data.code))
     }
 
     const dispatchLogin = (payload) => {
-        dispatch(setUserInfoLoading(true))
+        dispatch(setUserInfoLoadingReducer(true))
 
         return axiosInstance
             .post("/auth/login/dashboard", {...payload, fcm_token: '123123'})
             .then((result) => userInfoHandler(result))
             .finally(() => {
-                dispatch(setUserInfoLoading(false))
+                dispatch(setUserInfoLoadingReducer(false))
             });
     }
 
@@ -41,5 +49,22 @@ export const useAuthLogic = () => {
             .then(res => userInfoHandler(res, false))
     }
 
-    return {loginSelector, dispatchLogin, fetchProfileLogic: fetchProfile}
+    const dispatchLogout = () => {
+        axiosInstance
+            .post('/auth/logout')
+            .then((res) => {
+                if (res.data.code === HttpResponse.OK) {
+                    dispatch(resetLoginReducer())
+                    resetLogin()
+
+                    navigate(LOGIN_ROUTE)
+                }
+            })
+    }
+    return {
+        loginSelector,
+        dispatchLogin,
+        fetchProfileLogic: fetchProfile,
+        dispatchLogout
+    }
 }
