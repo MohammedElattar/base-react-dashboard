@@ -68,6 +68,7 @@ const NotificationView = ({
                                             <span className='fw-bolder'>{item.title}</span>
                                         </p>
                                         <small className='notification-text'>{item.body}</small>
+                                        <div className={'font-weight-bold font-small-3'}>{item.created_at}</div>
                                     </div>
                                     <div className='d-flex flex-column align-items-center'>
                                         {!item.seen && <Circle fill={'true'} color='primary' size={12} className='mb-1' onClick={() => handleReadingOneNotification(index)}/>}
