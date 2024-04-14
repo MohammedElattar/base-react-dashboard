@@ -36,7 +36,7 @@ export const useAuthLogic = () => {
         dispatch(setUserInfoLoadingReducer(true))
 
         return axiosInstance
-            .post("/auth/login/mobile", {...payload, fcm_token: '123123'})
+            .post("/auth/login/dashboard", {...payload, fcm_token: '123123'})
             .then((result) => userInfoHandler(result))
             .finally(() => {
                 dispatch(setUserInfoLoadingReducer(false))
