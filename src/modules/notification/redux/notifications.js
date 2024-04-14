@@ -3,13 +3,21 @@ import { resetStoreMethod } from "../../../utility/reduxHelper";
 
 const initialState = {
     showAllLoading: false,
+    nextPageLoading: false,
     showOneLoading: false,
     readOneLoading: false,
     readAllLoading: false,
     deleteOneLoading: false,
     deleteAllLoading: false,
     unreadCountLoading: false,
-    all: [],
+    all: {
+        data: [],
+        meta: {
+            currentPage: 1,
+            from: 1,
+            lastPage: 1
+        }
+    },
     unreadCount: 0
 }
 
@@ -18,7 +26,17 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {
         setAllNotificationsAction: (state, action) => {
-            state.all = action.payload
+            state.all.data = action.payload
+        },
+        setAllNotificationMetaAction: (state, action) => {
+            state.all.meta = {
+                from: action.payload.from,
+                currentPage: action.payload.current_page,
+                lastPage: action.payload.last_page
+            }
+        },
+        setAllNotificationsNextPageLoading: (state, action) => {
+            state.nextPageLoading = action.payload
         },
         setAllNotificationsLoading: (state, action) => {
             state.showAllLoading = action.payload;
@@ -42,9 +60,11 @@ export const notificationSlice = createSlice({
 export default notificationSlice.reducer;
 export const {
     setAllNotificationsAction,
+    setAllNotificationMetaAction,
     setAllNotificationsLoading,
     setUnreadNotificationsCountAction,
     setUnreadNotificationCountLoading,
     setReadOneNotificationLoadingAction,
-    setReadAllNotificationLoading
+    setReadAllNotificationLoading,
+    setAllNotificationsNextPageLoading
 } = notificationSlice.actions

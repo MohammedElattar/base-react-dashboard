@@ -6,7 +6,6 @@ import {HttpResponse} from "../../../constants/api";
 import {useNavigate} from "react-router-dom";
 import {DEFAULT_ROUTE} from "../../../constants/routes";
 import {isUserLoggedIn} from "../utils/authHelper";
-import {useStore} from "react-redux";
 import {resetStore} from "../../../redux/store";
 
 const LoginView = lazy(() => import("../views/LoginView"))
@@ -14,12 +13,10 @@ const LoginView = lazy(() => import("../views/LoginView"))
 const LoginContainer = () => {
     const navigate = useNavigate()
 
-    console.log(useStore().getState())
     useEffect(() => {
         if (isUserLoggedIn()) {
             navigate(DEFAULT_ROUTE);
         } else {
-            console.log('iam here in no logged user')
             resetStore()
         }
     }, [navigate]);

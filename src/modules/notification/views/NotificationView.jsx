@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from 'react'
+import {Fragment, useEffect, useState} from 'react'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -7,10 +7,10 @@ import Avatar from '@components/avatar'
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { AlertTriangle, Bell, Check, Circle, Inbox, Mail, Table, Trash, X } from 'react-feather'
+import { Bell, Circle, Trash, X } from 'react-feather'
 
 // ** Reactstrap Imports
-import { Badge, Button, DropdownItem, DropdownMenu, DropdownToggle, Input, UncontrolledDropdown, UncontrolledTooltip } from 'reactstrap'
+import {Badge, Button, DropdownItem, DropdownMenu, DropdownToggle, Spinner, UncontrolledDropdown} from 'reactstrap'
 import PropTypes from "prop-types";
 
 const NotificationView = ({
@@ -20,16 +20,18 @@ const NotificationView = ({
     handleDeletingOneNotification,
     handleReadingAllNotification,
     unreadNotificationsCount,
-    readAllNotificationLoading
+    readAllNotificationLoading,
+    fetchNextPage,
+    nextPageLoading,
+    allNotificationsLoading,
+    isDeleting
 }) => {
-    console.log('notifications', notifications)
     const renderNotificationItems = () => {
-
         return (
             <PerfectScrollbar
                 component='li'
                 className='media-list scrollable-container'
-                // onYReachEnd={}
+                onYReachEnd={fetchNextPage}
                 options={{
                     wheelPropagation: false
                 }}
@@ -56,7 +58,7 @@ const NotificationView = ({
                                 <Fragment>
                                     <div className='me-1'>
                                         <Avatar
-                                            img={require('@src/assets/images/portrait/small/avatar-s-15.jpg')}
+                                            img={require('../assets/notification-pill.png')}
                                             imgHeight={32}
                                             imgWidth={32}
                                         />
@@ -77,11 +79,25 @@ const NotificationView = ({
                         </a>
                     )
                 })}
+                {nextPageLoading && <div className={'d-flex justify-content-center align-items-center'}><Spinner color='primary' className={'text-center'} >Loading</Spinner></div>}
             </PerfectScrollbar>
         )
     }
     /*eslint-enable */
 
+
+    const [renderedNotifications, setRenderedNotifications] = useState([])
+
+    useEffect(() => {
+        if (
+            (!!notifications[0] && allNotificationsLoading === false)
+            || nextPageLoading === true
+            || isDeleting
+
+        ) {
+            setRenderedNotifications(renderNotificationItems())
+        }
+    }, [allNotificationsLoading, notifications]);
 
     return (
         <UncontrolledDropdown tag='li' className='dropdown-notification nav-item me-25'>
@@ -99,9 +115,9 @@ const NotificationView = ({
                         <a href='/' onClick={!!notifications[0] ? handleDeletingAllNotification : () => {}}><Trash size={18} /></a>
                     </DropdownItem>
                 </li>
-                {renderNotificationItems()}
+                {renderedNotifications}
                 <li className='dropdown-menu-footer'>
-                    <Button color='primary' block onClick={handleReadingAllNotification} disabled={readAllNotificationLoading || !!!notifications[0]}>
+                    <Button color='primary' block onClick={handleReadingAllNotification} disabled={unreadNotificationsCount === null || readAllNotificationLoading || !!!notifications[0]}>
                         Read all notifications
                     </Button>
                 </li>
@@ -116,7 +132,9 @@ NotificationView.propTypes = {
     handleReadingOneNotification: PropTypes.func.isRequired,
     handleReadingAllNotification: PropTypes.func.isRequired,
     handleDeletingOneNotification: PropTypes.func.isRequired,
-    handleDeletingAllNotification: PropTypes.func.isRequired
+    handleDeletingAllNotification: PropTypes.func.isRequired,
+    fetchNextPage: PropTypes.func,
+    nextPageLoading: PropTypes.bool
 }
 
 export default NotificationView

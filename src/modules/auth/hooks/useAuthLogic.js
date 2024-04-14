@@ -36,7 +36,7 @@ export const useAuthLogic = () => {
         dispatch(setUserInfoLoadingReducer(true))
 
         return axiosInstance
-            .post("/auth/login/dashboard", {...payload, fcm_token: '123123'})
+            .post("/auth/login/mobile", {...payload, fcm_token: '123123'})
             .then((result) => userInfoHandler(result))
             .finally(() => {
                 dispatch(setUserInfoLoadingReducer(false))
@@ -52,12 +52,10 @@ export const useAuthLogic = () => {
     const dispatchLogout = () => {
         axiosInstance
             .post('/auth/logout')
-            .then((res) => {
-                if (res.data.code === HttpResponse.OK) {
-                    resetLogin()
-                    dispatch(resetLoginReducer())
-                    navigate(LOGIN_ROUTE)
-                }
+            .then(() => {
+                resetLogin()
+                dispatch(resetLoginReducer())
+                navigate(LOGIN_ROUTE)
             })
     }
     return {

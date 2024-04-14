@@ -47,9 +47,9 @@ axiosInstance.interceptors.response.use(function (response) {
         if (window.location.pathname !== LOGIN_ROUTE) {
             window.location.replace(LOGIN_ROUTE)
         }
+    } else {
+        toast.error(message)
     }
-
-    toast.error(message)
 
     return Promise.reject(error);
 })

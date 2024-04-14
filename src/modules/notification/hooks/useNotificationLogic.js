@@ -1,31 +1,68 @@
-import axios from "axios";
 import axiosInstance from "../../../api/axiosInstance";
 import {
+    setAllNotificationMetaAction,
     setAllNotificationsAction,
-    setAllNotificationsLoading, setReadAllNotificationLoading, setReadOneNotificationLoadingAction, setUnreadNotificationCountLoading,
+    setAllNotificationsLoading, setAllNotificationsNextPageLoading,
+    // setAllNotificationsNextPageLoading,
+    setReadAllNotificationLoading,
+    setReadOneNotificationLoadingAction,
+    setUnreadNotificationCountLoading,
     setUnreadNotificationsCountAction
 } from "../redux/notifications";
 import { useDispatch, useSelector } from "react-redux";
+import {useState} from "react";
 
 const useNotificationLogic = () => {
     const dispatch = useDispatch();
+    const [isDeleting, setIsDeleting] = useState(false)
     const selector = useSelector(state => state.notificationReducer),
-        allNotification = selector.all,
+        allNotification = selector.all.data,
+        allNotificationsMeta = selector.all.meta,
+        nextPageLoading = selector.nextPageLoading,
         allNotificationsLoading = selector.showAllLoading,
         unreadNotifications = selector.unreadCount,
         readAllLoading = selector.readAllLoading,
         unreadNotificationsLoading = selector.unreadCountLoading;
 
     const getAllNotifications = () => {
+
         if (allNotification.length === 0) {
             dispatch(setAllNotificationsLoading(true))
 
-            axiosInstance.get('/notifications')
+            axiosInstance.get('/notifications', {params: {per_page: 10}})
                 .then((result) => {
                     dispatch(setAllNotificationsAction(result.data.data))
+                    dispatch(setAllNotificationMetaAction(result.data.meta))
                 })
                 .finally(() => dispatch(setAllNotificationsLoading(false)))
         }
+    }
+
+    const shouldFetchNextPage = () => {
+        return  nextPageLoading === false
+            && allNotificationsLoading === false
+            && !!allNotification[0]
+            && allNotificationsMeta.currentPage < allNotificationsMeta.lastPage
+    }
+
+    const fetchNextPage = () => {
+        if (shouldFetchNextPage()) {
+            console.log('fetch now !')
+            dispatch(setAllNotificationsLoading(true))
+            dispatch(setAllNotificationsNextPageLoading(true))
+
+            axiosInstance
+                .get('/notifications', {params:  {per_page: 10, page: allNotificationsMeta.currentPage + 1}})
+                .then((result) => {
+                    dispatch(setAllNotificationsAction([...allNotification, ...result.data.data]))
+                    dispatch(setAllNotificationMetaAction(result.data.meta))
+                })
+                .finally(() => {
+                    dispatch(setAllNotificationsLoading(false))
+                    dispatch(setAllNotificationsNextPageLoading(false))
+                })
+        }
+
     }
 
     const unreadNotificationsCount = () => {
@@ -47,6 +84,7 @@ const useNotificationLogic = () => {
 
         tmpNotifications.splice(index, 1)
 
+        setIsDeleting(true)
         dispatch(setAllNotificationsAction(tmpNotifications))
         dispatch(setUnreadNotificationsCountAction(tmpCount - (item.seen === false ? 1 : 0)))
 
@@ -58,6 +96,7 @@ const useNotificationLogic = () => {
             })
             .finally(() => {
                 item = tmpNotifications = tmpAllNotifications = tmpCount = null;
+                setIsDeleting(false)
             })
     }
 
@@ -65,6 +104,7 @@ const useNotificationLogic = () => {
         let tmpNotifications = [...allNotification],
             tmpCount = unreadNotifications
 
+        setIsDeleting(true)
         dispatch(setAllNotificationsAction([]))
         dispatch(setUnreadNotificationsCountAction(0))
 
@@ -75,6 +115,7 @@ const useNotificationLogic = () => {
         })
         .finally(() => {
             tmpNotifications = tmpCount = null;
+            setIsDeleting(false)
         })
     }
 
@@ -140,11 +181,14 @@ const useNotificationLogic = () => {
         deleteAllNotifications,
         readOneNotification,
         readAllNotifications,
+        fetchNextPage,
         allNotification,
         allNotificationsLoading,
         unreadNotifications,
         unreadNotificationsLoading,
-        readAllLoading
+        readAllLoading,
+        nextPageLoading,
+        isDeleting
     }
 }
 

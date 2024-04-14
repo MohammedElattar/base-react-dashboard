@@ -11,9 +11,13 @@ const NotificationContainer = () => {
         deleteAllNotifications,
         readOneNotification,
         readAllNotifications,
+        fetchNextPage,
         allNotification,
         unreadNotifications,
-        readAllLoading
+        readAllLoading,
+        nextPageLoading,
+        allNotificationsLoading,
+        isDeleting
     } = useNotificationLogic()
 
     useEffect(() => {
@@ -22,6 +26,10 @@ const NotificationContainer = () => {
     }, []);
 
     return <NotificationView
+        nextPageLoading={nextPageLoading}
+        allNotificationsLoading={allNotificationsLoading}
+        fetchNextPage={fetchNextPage}
+        isDeleting={isDeleting}
         notifications={allNotification}
         handleDeletingOneNotification={deleteOneNotification}
         handleDeletingAllNotification={deleteAllNotifications}
