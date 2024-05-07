@@ -14,6 +14,9 @@ import PublicRoute from "@components/routes/PublicRoute"
 import {isObjEmpty} from "@utils"
 import {authRoutes} from "../../modules/auth/routes"
 import {HOME_ROUTE, NOT_FOUND_ROUTE} from "../../constants/routes";
+import Chat from "../../modules/chat/views/Chat";
+import CustomTable from "../../components/CustomTable"
+import CategoryTable from "../../modules/categories/views/CategoryTable"
 
 const getLayout = {
     blank: <BlankLayout/>,
@@ -53,7 +56,15 @@ const Routes = [
             layout: "blank"
         }
     },
-  ...authRoutes
+    {
+        path:'/apps/chat',
+        element: <Chat />
+    },
+    ...authRoutes,
+    {
+        path: 'test-table',
+        element: <CategoryTable />
+    }
 ]
 
 const getRouteMeta = (route) => {

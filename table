@@ -1,0 +1,153 @@
+import {Fragment} from "react";
+import {Card, CardHeader, CardTitle, Col, Input, Label, Row} from "reactstrap";
+import BreadCrumbs from "../@core/components/breadcrumbs";
+import '@styles/react/libs/tables/react-dataTable-component.scss'
+import {ChevronDown} from "react-feather";
+import DataTable from 'react-data-table-component'
+import ReactPaginate from 'react-paginate'
+
+const ServerSideDataTable = () => {
+    const serverSideColumns = [
+        {
+            sortable: true,
+            name: 'Full Name',
+            minWidth: '225px',
+            selector: row => row.full_name
+        },
+        {
+            sortable: true,
+            name: 'Email',
+            minWidth: '250px',
+            selector: row => row.email
+        },
+        {
+            sortable: true,
+            name: 'Position',
+            minWidth: '250px',
+            selector: row => row.post
+        },
+        {
+            sortable: true,
+            name: 'Office',
+            minWidth: '150px',
+            selector: row => row.city
+        }
+    ];
+    const data = [
+{
+        responsive_id: '',
+        id: 1,
+        avatar: '10.jpg',
+        full_name: "Korrie O'Crevy",
+        post: 'Nuclear Power Engineer',
+        email: 'kocrevy0@thetimes.co.uk',
+        city: 'Krasnosilka',
+        start_date: '09/23/2016',
+        salary: '$23896.35',
+        age: '61',
+        experience: '1 Year',
+        status: 2
+    }
+    ]
+
+    const store = {data, total: 1}
+
+    const handlePagination = (page) => {
+        console.log(page)
+    }
+
+    const CustomPagination = () => {
+        const count = 5
+        const currentPage = 1
+
+        return (
+            <ReactPaginate
+                previousLabel={''}
+                nextLabel={''}
+                breakLabel='...'
+                pageCount={Math.ceil(count) || 1}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                activeClassName='active'
+                forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+                onPageChange={page => handlePagination(page)}
+                pageClassName='page-item'
+                breakClassName='page-item'
+                nextLinkClassName='page-link'
+                pageLinkClassName='page-link'
+                breakLinkClassName='page-link'
+                previousLinkClassName='page-link'
+                nextClassName='page-item next-item'
+                previousClassName='page-item prev-item'
+                containerClassName={
+                    'pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1'
+                }
+            />
+        )
+    }
+    return <Fragment>
+        <BreadCrumbs title='Datatables Advance' data={[{title: 'Datatables'}, {title: 'Datatables Advance'}]}/>
+        <Row>
+            <Col sm='12'>
+            <Fragment>
+                <Card>
+                    <CardHeader className='border-bottom'>
+                        <CardTitle tag='h4'>Categories</CardTitle>
+                    </CardHeader>
+                    <Row className='mx-0 mt-1 mb-50'>
+                        <Col sm='6'>
+                            <div className='d-flex align-items-center'>
+                                <Label for='sort-select'>show</Label>
+                                <Input
+                                    className='dataTable-select'
+                                    type='select'
+                                    id='sort-select'
+                                    value={7}
+                                    // onChange={e => e.preventDefault()}
+                                >
+                                    <option value={7}>7</option>
+                                    <option value={10}>10</option>
+                                    <option value={25}>25</option>
+                                    <option value={50}>50</option>
+                                    <option value={75}>75</option>
+                                    <option value={100}>100</option>
+                                </Input>
+                                <Label for='sort-select'>entries</Label>
+                            </div>
+                        </Col>
+                        <Col className='d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1' sm='6'>
+                            <Label className='me-1' for='search-input'>
+                                Search
+                            </Label>
+                            <Input
+                                className='dataTable-filter'
+                                type='text'
+                                bsSize='sm'
+                                id='search-input'
+                                // value={searchValue}
+                                // onChange={handleFilter}
+                            />
+                        </Col>
+                    </Row>
+                    <div className='react-dataTable'>
+                        <DataTable
+                            bordered
+                            noHeader
+                            pagination
+                            paginationServer
+                            className='react-dataTable'
+                            columns={serverSideColumns}
+                            sortIcon={<ChevronDown size={10} />}
+                            paginationComponent={CustomPagination}
+                            data={store.data}
+                        />
+                    </div>
+                </Card>
+            </Fragment>
+            </Col>
+        </Row>
+
+    </Fragment>
+}
+
+export default ServerSideDataTable;
