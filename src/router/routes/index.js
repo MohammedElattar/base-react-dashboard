@@ -14,9 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute"
 import {isObjEmpty} from "@utils"
 import {authRoutes} from "../../modules/auth/routes"
 import {HOME_ROUTE, NOT_FOUND_ROUTE} from "../../constants/routes";
-import Chat from "../../modules/chat/views/Chat";
-import CustomTable from "../../components/CustomTable"
-import CategoryTable from "../../modules/categories/views/CategoryTable"
+import CategoryRoutes from '../../modules/category/routes';
 
 const getLayout = {
     blank: <BlankLayout/>,
@@ -31,7 +29,6 @@ const TemplateTitle = "%s - Mohamed Attar"
 const DefaultRoute = "/home"
 
 const Home = lazy(() => import("../../views/Home"))
-const SecondPage = lazy(() => import("../../views/SecondPage"))
 const Error = lazy(() => import("../../views/Error"))
 
 // ** Merge Routes
@@ -45,25 +42,14 @@ const Routes = [
         path: HOME_ROUTE,
         element: <Home/>
     },
+    ...CategoryRoutes,
+    ...authRoutes,
     {
-        path: "/second-page",
-        element: <SecondPage/>
-    },
-    {
-        path: NOT_FOUND_ROUTE,
+        path: '*',
         element: <Error/>,
         meta: {
             layout: "blank"
         }
-    },
-    {
-        path:'/apps/chat',
-        element: <Chat />
-    },
-    ...authRoutes,
-    {
-        path: 'test-table',
-        element: <CategoryTable />
     }
 ]
 

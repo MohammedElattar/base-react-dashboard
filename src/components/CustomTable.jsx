@@ -1,16 +1,21 @@
 import React, { Fragment, useState } from "react";
-import { Button, Card, CardHeader, CardTitle, Col, DropdownItem, DropdownMenu, DropdownToggle, Input, Label, Row, UncontrolledButtonDropdown } from "reactstrap";
+import { Button, Card, CardHeader, CardTitle, Col, Input, Label, Row} from "reactstrap";
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { ChevronDown, Copy, FileText, Grid, Plus, Printer, Share } from "react-feather";
+import { ChevronDown, Plus} from "react-feather";
 import DataTable from 'react-data-table-component';
 import { paginationComponent } from "../helpers/paginationHelper";
 
-const CustomTable = ({ columns, data, pagination = false, searchable = true, entriesPerPageOptions = [5, 10, 25, 50, 75, 100] }) => {
-    const [searchValue, setSearchValue] = useState('');
-
-    const handleEntriesChange = e => {
-        console.log(e)
-    }
+const CustomTable = ({
+     title,
+     columns, 
+     data,
+     paginationObject,
+     pagination = false, 
+     searchable = true,
+     searchedValues,
+     entriesPerPageOptions = [5, 10, 25, 50, 75, 100] 
+}) => {
+    const [searchValue, setSearchValue] = useState(searchedValues);
 
     const handleSearch = e => {
         setSearchValue(e.target.value);
@@ -23,7 +28,7 @@ const CustomTable = ({ columns, data, pagination = false, searchable = true, ent
                     <Fragment>
                         <Card>
                             <CardHeader className='border-bottom'>
-                                <CardTitle tag='h4'>Categories</CardTitle>
+                                <CardTitle tag='h4'>{title}</CardTitle>
                                 <div className='d-flex mt-md-0 mt-1'>
                                     <Button className='ms-2' color='primary'>
                                         <Plus size={15} />
@@ -40,8 +45,8 @@ const CustomTable = ({ columns, data, pagination = false, searchable = true, ent
                                                 className='dataTable-select'
                                                 type='select'
                                                 id='entries-select'
-                                                value={entriesPerPageOptions[0]}
-                                                onChange={handleEntriesChange}
+                                                value={paginationObject.currentPerPage}
+                                                onChange={(e) => paginationObject.handlePerPageChange(e.target.value)}
                                             >
                                                 {entriesPerPageOptions.map(option => (
                                                     <option key={option} value={option}>{option}</option>
@@ -72,7 +77,7 @@ const CustomTable = ({ columns, data, pagination = false, searchable = true, ent
                                     bordered
                                     noHeader
                                     pagination={pagination}
-                                    paginationComponent={() => paginationComponent({ count: 100, currentPage: 1 })}
+                                    paginationComponent={() => paginationComponent(paginationObject)}
                                     paginationServer
                                     className='react-dataTable'
                                     columns={columns}

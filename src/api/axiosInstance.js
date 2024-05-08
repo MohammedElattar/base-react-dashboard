@@ -12,14 +12,12 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(function (config) {
-    // Get the token and set the authorization header
     const token = getToken();
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 }, function (error) {
-    // Do something with request error
     return Promise.reject(error);
 });
 

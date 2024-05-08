@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { resetStoreMethod } from "../../../utility/reduxHelper";
+import { paginationInitialValues, setPaginationAction } from "../../../helpers/reduxHelper";
 
 const initialState = {
     showAllLoading: false,
@@ -12,11 +13,7 @@ const initialState = {
     unreadCountLoading: false,
     all: {
         data: [],
-        meta: {
-            currentPage: 1,
-            from: 1,
-            lastPage: 1
-        }
+        ...paginationInitialValues()
     },
     unreadCount: 0
 }
@@ -29,11 +26,7 @@ export const notificationSlice = createSlice({
             state.all.data = action.payload
         },
         setAllNotificationMetaAction: (state, action) => {
-            state.all.meta = {
-                from: action.payload.from,
-                currentPage: action.payload.current_page,
-                lastPage: action.payload.last_page
-            }
+            state.all.meta = setPaginationAction(action)
         },
         setAllNotificationsNextPageLoading: (state, action) => {
             state.nextPageLoading = action.payload

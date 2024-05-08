@@ -25,7 +25,7 @@ const themeConfig = {
     },
     customizer: false,
     scrollTop: true, // Enable scroll to top button
-    toastPosition: 'top-right' // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+    toastPosition: 'top-center' // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
   }
 }
 
