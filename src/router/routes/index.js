@@ -14,6 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute"
 import {isObjEmpty} from "@utils"
 import {authRoutes} from "../../modules/auth/routes"
 import {HOME_ROUTE, NOT_FOUND_ROUTE} from "../../constants/routes";
+import CategoryRoutes from '../../modules/category/routes';
 
 const getLayout = {
     blank: <BlankLayout/>,
@@ -28,7 +29,6 @@ const TemplateTitle = "%s - Mohamed Attar"
 const DefaultRoute = "/home"
 
 const Home = lazy(() => import("../../views/Home"))
-const SecondPage = lazy(() => import("../../views/SecondPage"))
 const Error = lazy(() => import("../../views/Error"))
 
 // ** Merge Routes
@@ -42,18 +42,15 @@ const Routes = [
         path: HOME_ROUTE,
         element: <Home/>
     },
+    ...CategoryRoutes,
+    ...authRoutes,
     {
-        path: "/second-page",
-        element: <SecondPage/>
-    },
-    {
-        path: NOT_FOUND_ROUTE,
+        path: '*',
         element: <Error/>,
         meta: {
             layout: "blank"
         }
-    },
-  ...authRoutes
+    }
 ]
 
 const getRouteMeta = (route) => {

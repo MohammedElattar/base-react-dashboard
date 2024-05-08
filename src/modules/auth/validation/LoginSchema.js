@@ -2,9 +2,11 @@ import generateSchema, {emailRules, passwordRules} from "../../../helpers/valida
 
 const LoginSchema = () => {
     return generateSchema({
-        email: emailRules(),
+        email: emailRules({required: null}),
         password: passwordRules({min: null})
     })
 }
 
 export default LoginSchema
+
+// export type nn= z.infer<ReaturnValue<typeof
