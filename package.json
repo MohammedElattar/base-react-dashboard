@@ -25,6 +25,7 @@
     "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-hook-form": "^7.51.4",
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^14.1.0",
     "react-paginate": "^8.2.0",
@@ -36,6 +37,7 @@
     "reactstrap": "^9.2.2",
     "sass": "^1.74.1",
     "styled-components": "^6.1.8",
+    "sweetalert2": "^11.10.8",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },

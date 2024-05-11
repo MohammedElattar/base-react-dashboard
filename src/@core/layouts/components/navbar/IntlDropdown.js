@@ -23,7 +23,7 @@ const IntlDropdown = () => {
   const handleLangUpdate = (e, lang) => {
     e.preventDefault()
     i18n.changeLanguage(lang)
-    setValue(true)
+    setValue(false)
   }
 
   return (

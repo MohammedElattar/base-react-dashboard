@@ -1,52 +1,93 @@
-import { lazy, useEffect, useState } from "react";
+import {lazy, useRef, useState} from "react";
 import useCategoryLogic from "../hooks/useCategoryLogic";
-import { getValidPageNumber, getValidPerPage, updatePaginationParams } from "../../../helpers/paginationHelper";
+import usePagination from "../../../utility/hooks/usePagination";
+import {buildFormikParams, formikInstance} from "../../../utility/formik/formikHelper";
+import categoriesSchema from '../validation'
+import {isObjEmpty} from "../../../utility/Utils";
 
 const CategoryTable = lazy(() => import('../views/CategoryTable'));
 
+export const emptyCategoryForm = {
+    name: ''
+};
+
 const CategoryContainer = () => {
-    const { 
-        allCategories, 
-        getAllCategoriesLogic, 
+    const {
+        allCategories,
         allCategoriesMeta,
-        allCategoriesLoading
+        oneCategory,
+        getAllCategoriesLogic,
+        getOneCategoryLogic,
+        storeCategoryLogic,
+        updateCategoryLogic,
+        deleteCategoryLogic
     } = useCategoryLogic();
-    const [currentPerPage, setCurrentPerPage] = useState(getValidPerPage())
-    const [currentPage, setCurrentPageState] = useState(getValidPageNumber())
 
-    useEffect(() => {
-        getAllCategoriesLogic()
-    }, [currentPage, currentPerPage])
+    const [inAdd, setInAdd] = useState(isObjEmpty({}))
+    const formRef = useRef(null)
+    const formik = formikInstance({
+        initialValues: inAdd ? emptyCategoryForm : {
+            name: oneCategory.name
+        },
+        validationSchema: categoriesSchema,
+        onSubmit: () => {
+            const formData = new FormData(formRef.current)
 
-    const handlePageChange = (page) => {
-        setCurrentPageState(page)
-        updatePaginationParams(page, currentPerPage)
-    }
+            if (inAdd) {
+                storeCategoryLogic(formData, buildFormikParams(formik))
+            } else {
+                updateCategoryLogic(formData, oneCategory.id, buildFormikParams(formik))
+            }
+        }});
 
-    const handlePerPageChange = (perPage) => {
-        setCurrentPerPage(perPage)
-        updatePaginationParams(currentPage, perPage)
-        setCurrentPerPage(perPage)
-        // getAllCategoriesLogic()
-    }
+    const {
+        currentPerPage,
+        currentPage,
+        setCurrentPageState,
+        handlePageChange,
+        handlePerPageChange
+    } = usePagination(getAllCategoriesLogic, allCategoriesMeta);
 
-    const handleSearch = (value) => {
-        console.log(value)
-    }
+    const {
+        values,
+        errors,
+        handleChange,
+        isSubmitting,
+        handleSubmit,
+        handleBlur,
+        isValid,
+        resetForm,
+        setValues
+    } = formik
 
-    return <CategoryTable
-        data={allCategories}
-        handleSearch={handleSearch}
-        allCategoriesLoading={allCategoriesLoading}
-        paginationObject={{ 
-            meta: allCategoriesMeta, 
-            currentPerPage, 
-            currentPage,
-            handlePageChange, 
-            handlePerPageChange,
-            setCurrentPageState
+    return (
+        <CategoryTable
+            data={{allCategories, oneCategory}}
+            showOne={getOneCategoryLogic}
+            handleDelete={(id) => deleteCategoryLogic(id, formik.setSubmitting)}
+            formFields={{
+                formRef,
+                values,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleSubmit,
+                isValid,
+                handleBlur,
+                resetForm,
+                setValues
         }}
-    />
-}
+            setInAdd={setInAdd}
+            paginationObject={{
+                meta: allCategoriesMeta,
+                currentPerPage,
+                currentPage,
+                setCurrentPageState,
+                handlePageChange,
+                handlePerPageChange
+            }}
+        />
+    );
+};
 
 export default CategoryContainer;

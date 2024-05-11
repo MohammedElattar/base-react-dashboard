@@ -1,4 +1,4 @@
-import generateSchema, {emailRules, passwordRules} from "../../../helpers/validationRuleHelper"
+import generateSchema, {emailRules, passwordRules} from "../../../utility/helpers/validationRuleHelper"
 
 const LoginSchema = () => {
     return generateSchema({

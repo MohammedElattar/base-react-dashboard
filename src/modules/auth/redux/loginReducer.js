@@ -1,6 +1,6 @@
 // ** Redux Imports
 import {createSlice} from "@reduxjs/toolkit"
-import { resetStoreMethod } from "../../../utility/reduxHelper";
+import { resetStoreMethod } from "../../../utility/helpers/reduxHelper";
 
 const initialState = {
     userInfo: {},

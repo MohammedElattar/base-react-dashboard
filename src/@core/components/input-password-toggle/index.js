@@ -8,8 +8,8 @@ import { Eye, EyeOff } from "react-feather"
 
 // ** Reactstrap Imports
 import { InputGroup, Input, InputGroupText, Label } from "reactstrap"
-import CustomInput from "../../../components/CustomInput";
-import ErrorBox from "../../../components/ErrorBox";
+import CustomInput from "../../../components/form/CustomInput";
+import ErrorBox from "../../../components/form/ErrorBox";
 
 const InputPasswordToggle = forwardRef((props, ref) => {
   // ** Props

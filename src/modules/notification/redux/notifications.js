@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { resetStoreMethod } from "../../../utility/reduxHelper";
-import { paginationInitialValues, setPaginationAction } from "../../../helpers/reduxHelper";
+import { resetStoreMethod, paginationInitialValues, setPaginationAction} from "../../../utility/helpers/reduxHelper";
 
 const initialState = {
     showAllLoading: false,

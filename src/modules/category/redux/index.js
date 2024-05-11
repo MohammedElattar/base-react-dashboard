@@ -1,13 +1,26 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { resetStoreMethod } from "../../../utility/reduxHelper";
-import { paginationInitialValues, setPaginationAction } from "../../../helpers/reduxHelper";
+import {paginationInitialValues, resetStoreMethod, setPaginationAction} from "../../../utility/helpers/reduxHelper";
 
 const initialState = {
-  all: {
-    data: [],
-    loading: false,
-    ...paginationInitialValues()
-  }
+    all: {
+        data: [],
+        ...paginationInitialValues()
+    },
+    show: {
+        name: ''
+    },
+    store: {
+        code: 0,
+        loading: false
+    },
+    update: {
+        code: 0,
+        loading: false
+    },
+    delete: {
+        code: 0,
+        loading: false
+    }
 }
 
 export const categorySlice = createSlice({
@@ -15,13 +28,13 @@ export const categorySlice = createSlice({
     initialState,
     reducers: {
         setAllCategoriesAction: (state, action) => {
-            state.all.data = action.payload
+            state.all.data = action.payload;
         },
         setAllCategoriesMetaAction: (state, action) => {
             state.all.meta = setPaginationAction(action)
         },
-        setAllCategoriesLoading: (state, action) => {
-            state.all.loading = action.payload;
+        setOneCategoryAction: (state, action) => {
+            state.show = action.payload;
         },
         ...resetStoreMethod(initialState)
     }
@@ -31,5 +44,5 @@ export default categorySlice.reducer;
 export const {
     setAllCategoriesAction,
     setAllCategoriesMetaAction,
-    setAllCategoriesLoading
+    setOneCategoryAction
 } = categorySlice.actions

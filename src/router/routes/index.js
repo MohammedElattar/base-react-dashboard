@@ -1,11 +1,10 @@
 // ** React Imports
 import {Fragment, lazy} from "react"
-import {Navigate} from "react-router-dom"
 // ** Layouts
 import BlankLayout from "@layouts/BlankLayout"
-import VerticalLayout from "@src/layouts/VerticalLayout"
-import HorizontalLayout from "@src/layouts/HorizontalLayout"
-import LayoutWrapper from "@src/@core/layouts/components/layout-wrapper"
+import VerticalLayout from "../../layouts/VerticalLayout"
+import HorizontalLayout from "../../layouts/HorizontalLayout"
+import LayoutWrapper from "../../@core/layouts/components/layout-wrapper"
 
 // ** Route Components
 import PublicRoute from "@components/routes/PublicRoute"
@@ -13,8 +12,9 @@ import PublicRoute from "@components/routes/PublicRoute"
 // ** Utils
 import {isObjEmpty} from "@utils"
 import {authRoutes} from "../../modules/auth/routes"
-import {HOME_ROUTE, NOT_FOUND_ROUTE} from "../../constants/routes";
+import {HOME_ROUTE} from "../../constants/routes";
 import CategoryRoutes from '../../modules/category/routes';
+import {Navigate} from "react-router-dom";
 
 const getLayout = {
     blank: <BlankLayout/>,

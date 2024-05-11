@@ -1,8 +1,8 @@
 import axios from "axios"
 import {getToken, resetLogin} from "../modules/auth/utils/authHelper";
 import {HttpResponse} from "../constants/api";
-import toast from "react-hot-toast";
 import {LOGIN_ROUTE} from "../modules/auth/constants/routes";
+import toastFactory from "../utility/factories/toastFactory";
 
 const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
@@ -22,12 +22,12 @@ axiosInstance.interceptors.request.use(function (config) {
 });
 
 axiosInstance.interceptors.response.use(function (response) {
-    toast.dismiss()
+    toastFactory.dismiss()
 
     const shouldShowToast = response.data.showToast;
 
     if (shouldShowToast) {
-        toast.success(response.data.message)
+        toastFactory.success(response.data.message)
     }
 
     return response;
@@ -36,17 +36,18 @@ axiosInstance.interceptors.response.use(function (response) {
         errorCode = data.code,
         message = data.message;
 
-    toast.dismiss()
+    toastFactory.dismiss()
 
     if (errorCode === HttpResponse.UN_AUTHENTICATED) {
-        toast.error(message)
+        toastFactory.error(message)
         resetLogin()
 
         if (window.location.pathname !== LOGIN_ROUTE) {
             window.location.replace(LOGIN_ROUTE)
         }
-    } else {
-        toast.error(message)
+
+    } else if (errorCode !== HttpResponse.VALIDATION_ERRORS) {
+        toastFactory.error(message)
     }
 
     return Promise.reject(error);

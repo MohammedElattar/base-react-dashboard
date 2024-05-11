@@ -1,6 +1,6 @@
 import { lazy } from "react"
 
-const Pagination = lazy(() => import('../components/PaginationComponent'))
+const Pagination = lazy(() => import('../../components/table/PaginationComponent'))
 import { getUniqueParams } from "./routeHelper";
 
 export const paginationComponent = (args) => {

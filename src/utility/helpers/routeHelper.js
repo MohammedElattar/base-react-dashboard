@@ -7,7 +7,6 @@ export const parseRoute = (url = '', bindings = {}) => {
     return routePath;
 }
 
-
 export function getUniqueParams() {
     const urlParams = new URLSearchParams(window.location.search);
 

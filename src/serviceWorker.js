@@ -2,8 +2,8 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
-import toast from "react-hot-toast";
 import { HttpResponse } from "./constants/api";
+import toastFactory from "./utility/factories/toastFactory";
 
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
@@ -124,7 +124,7 @@ function checkValidServiceWorker(swUrl, config) {
       }
     })
     .catch(() => {
-      toast.error(
+      toastFactory.error(
         "No internet connection found. App is running in offline mode."
       );
     });

@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import {FormFeedback} from "reactstrap";
 
 const ErrorBox = ({message}) => {
-    return message ? <span className="alert alert-danger mt-1">{message}</span> : null
+    return message && <FormFeedback>{message}</FormFeedback>
 }
 
 ErrorBox.propTypes = {

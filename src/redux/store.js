@@ -2,7 +2,7 @@ import rootReducer from "./rootReducer"
 import { configureStore } from "@reduxjs/toolkit"
 import {loginSlice} from "../modules/auth/redux/loginReducer";
 import {notificationSlice} from "../modules/notification/redux/notifications";
-import { RESET_REDUCER_KEY } from "../utility/reduxHelper";
+import { RESET_REDUCER_KEY } from "../utility/helpers/reduxHelper";
 
 const store = configureStore({
   reducer: rootReducer,

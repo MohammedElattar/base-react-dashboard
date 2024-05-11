@@ -8,5 +8,5 @@ export default [
           appLayout: true,
           className: 'chat-application'
         }
-    },
+    }
 ]

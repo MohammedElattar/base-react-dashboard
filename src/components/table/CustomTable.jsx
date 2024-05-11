@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { Button, Card, CardHeader, CardTitle, Col, Input, Label, Row} from "reactstrap";
-import '@styles/react/libs/tables/react-dataTable-component.scss'
+import '../../@core/scss/react/libs/tables/react-dataTable-component.scss'
 import { ChevronDown, Plus} from "react-feather";
 import DataTable from 'react-data-table-component';
-import { paginationComponent } from "../helpers/paginationHelper";
+import {paginationComponent} from "../../utility/helpers/paginationHelper";
 
 const CustomTable = ({
      title,
@@ -13,6 +13,7 @@ const CustomTable = ({
      pagination = false, 
      searchable = true,
      searchedValues,
+     handleOpen,
      entriesPerPageOptions = [5, 10, 25, 50, 75, 100] 
 }) => {
     const [searchValue, setSearchValue] = useState(searchedValues);
@@ -30,7 +31,7 @@ const CustomTable = ({
                             <CardHeader className='border-bottom'>
                                 <CardTitle tag='h4'>{title}</CardTitle>
                                 <div className='d-flex mt-md-0 mt-1'>
-                                    <Button className='ms-2' color='primary'>
+                                    <Button className='ms-2' color='primary' onClick={() => handleOpen(true)}>
                                         <Plus size={15} />
                                         <span className='align-middle ms-50'>Add Record</span>
                                     </Button>

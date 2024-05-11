@@ -24,11 +24,10 @@ const LayoutWrapper = (props) => {
 
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector((state) => state)
+  const navbarStore = useSelector((state) => state.navbar);
+  const contentWidth = useSelector((state) => state.contentWidth);
+  const layoutStored = useSelector((state) => state.layout);
 
-  const navbarStore = store.navbar
-  const layoutStored = store.layout.layout
-  const contentWidth = store.layout.contentWidth
   //** Vars
   const appLayoutCondition =
     (layoutStored.layout === "horizontal" && !routeMeta) ||

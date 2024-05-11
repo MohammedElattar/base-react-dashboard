@@ -10,8 +10,8 @@ import {Button, Card, CardBody, Form, Label} from 'reactstrap'
 // ** Styles
 import '@styles/react/pages/page-authentication.scss'
 import PropTypes from 'prop-types'
-import CustomInput from "../../../components/CustomInput"
-import ErrorBox from "../../../components/ErrorBox";
+import CustomInput from "../../../components/form/CustomInput"
+import ErrorBox from "../../../components/form/ErrorBox";
 
 const LoginView = ({
                        handleSubmit,

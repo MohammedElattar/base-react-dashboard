@@ -1,35 +1,42 @@
 import DeleteDropDownItem from "../../../components/table/dropDownItems/DeleteDropDownItem";
 import EditDropDownItem from "../../../components/table/dropDownItems/EditDropDownItem";
 import TableActions from "../../../components/table/dropDownItems/TableActions";
-import { parseRoute } from "../../../helpers/routeHelper";
 
-const generateActions = row => {
+const generateActions = (row, props) => {
+    const {handleOpen, setOpen, showOne, handleDelete} = props;
+
     const actions = [
-        <EditDropDownItem href={parseRoute()} key={0}/>,
-        <DeleteDropDownItem key={1}/>
+        <EditDropDownItem key={0} onClick={() => {
+            showOne(row.id)
+            handleOpen(false)
+            setOpen(true)
+        }}/>,
+        <DeleteDropDownItem key={1} handleDelete={() => handleDelete(row.id)}/>
     ]
 
     return <TableActions row={row} actions={actions}/>
 }
 
-const columns = [
-    {
-        sortable: true,
-        name: 'ID',
-        minWidth: '225px',
-        selector: row => row.id
-    },
-    {
-        sortable: true,
-        name: 'Name',
-        minWidth: '250px',
-        selector: row => row.name
-    },
-    {
-        name: 'Actions',
-        minWidth: '100px',
-        cell: row => generateActions(row)
-      }
-];
+const getColumns = (props) => {
+    return [
+        {
+            sortable: true,
+            name: 'ID',
+            minwidth: '225px',
+            selector: row => row.id
+        },
+        {
+            sortable: true,
+            name: 'Name',
+            minwidth: '250px',
+            selector: row => row.name
+        },
+        {
+            name: 'Actions',
+            minwidth: '100px',
+            cell: row => generateActions(row, props)
+        }
+    ];
+}
 
-export default columns;
+export default getColumns;
